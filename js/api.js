@@ -1,33 +1,35 @@
 /* NOTES:
-1. API help to load data form server.
-2. When sent make it JSON.stringify(object) .
-3. When receive make it JSON.parse(JSON string).
-3. 
-*/
+ 1. API conection from JSON place holder
+ */
 
-/* JavaScript Object Notation (JSON) */
+// fetch('https://jsonplaceholder.typicode.com/todos/1')
+//     .then(response => response.json())
+//     .then(json => console.log(json))
 
-/* Single line object */
-const user = { id: 11, name: 'Gorib Amir', job: 'actor' };
-// console.log(user);
+function dataLoad() {
+    fetch('https://jsonplaceholder.typicode.com/albums')
+        .then(res => res.json())
+        // .then(data => console.log(data[0].title))
+        .then(data => document.getElementById('ShowData').innerHTML = data[0].title)
+}
 
 
-/* Multi line object */
-const shop = {
-    name: 'ALia Store',
-    address: 'Ranabir road',
-    products: ['laptop', 'mobile', 'pepsi'],
-    profit: 15000,
-    owner: {
-        name: 'Alia Bhatt',
-        profession: 'Actor',
-    },
-    isExpendive: false
-};
-const shopStringfied = JSON.stringify(shop);
+/*  fetch the data form API and show it on html as appendChild */
+function users() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(Response => Response.json())
+        // .then(data => console.log(data[0]));
+        .then(data => loadUsers(data));
+}
+function loadUsers(data) {
+    const ul = document.getElementById('users');
+    console.log(ul)
+    for (const user of data) {
+        const li = document.createElement('li');
+        li.innerText = `Name: ${user.name}
+        Email: ${user.email}
+        Company: ${user.company.name}`;
+        ul.appendChild(li);
+    }
+}
 
-// console.log(shop); // Normal object
-console.log(shopStringfied); // stringify object in JSON
-
-const converted = JSON.parse(shopStringfied); // convert a JSON to normal js code
-console.log(converted);
